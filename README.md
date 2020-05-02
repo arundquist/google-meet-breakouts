@@ -2,7 +2,7 @@
 Google Apps Script code for your GSuite domain that allows instructors to launch breakout rooms
 
 # Description
-This script looks at the users calendar and grabs any events that are currently happening. For each it grabs the invite list. It then displays all those individuals on a page where you can create small groups. Once the groups are set you can launch the google meets calendare invites. Each person in the group has a new event placed on their google calendar and is emailed a notification.
+This script looks at the users calendar and grabs any events that are currently happening. For each it grabs the invite list. It then displays all those individuals on a page where you can create small groups. Once the groups are set you can launch the google meets calendar invites. Each person in the group has a new event placed on their google calendar and is emailed a notification.
 
 [Here's a video of it in action.](https://www.loom.com/share/8488270ba9ac4d3988b4e1fe9305255f)
 
