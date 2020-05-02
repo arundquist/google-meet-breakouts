@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body onLoad="init()">
+    <div class="container" id="container">
+    <div class="row">
+      <div class="col" id="left"></div>
+      <div class="col">Groups <button type="button" onClick="groups.push([]);showGroups();">Start new group</button>
+        <div id="right"></div>
+        <button type="button" onClick="launchGroups()">Launch Groups</button>
+      </div>
+      
+    
+    
+    </div>
+    </div>
+    
+    
+<script>
+  var names=<?!= JSON.stringify(names) ?>;
+  var guestslists = <?!= JSON.stringify(guestslists) ?>;
+  var container=document.getElementById("container");
+  var left = document.getElementById("left");
+  var right = document.getElementById("right");
+  var groups=[];
+  var curgroup=[];
+  function init(){
+    var html = `<ul class="list-group">`;
+    html += names.map((n,i)=>{var h=`<li class="list-group-item">${n}<ul class="list-group">`;
+                          h+=guestslists[i].map((g,j)=>`<li class="list-group-item" onClick="addToGroup(${i},${j})"><span id="email${i}${j}">${g}</span></li>`).join('');
+                          h+=`</ul></li>`;
+                          return h;}).join('');
+    html+="</ul>";
+    left.innerHTML=html;
+    }
+    
+  function addToGroup(i,j){
+    var email=guestslists[i][j];
+    curgroup=groups[groups.length-1];
+    curgroup.push(email);
+    showGroups();
+    document.getElementById(`email${i}${j}`).classList.add("text-muted");
+    }
+
+  function showGroups(){
+    var html=`<ul class="list-group">`;
+    html+=groups.map((g,k)=>{var h=`<li class="list-group-item">Group ${k} <span id="event${k}"></span>: `;
+                             h+=g.join();
+                             h+=`</li>`;
+                             return h;
+                             });
+    html+=`</ul>`;
+    right.innerHTML=html;
+    }
+    
+  function launchGroups(){
+    google.script.run.withSuccessHandler(eventsReturn).launchServer(groups);
+    }
+  function eventsReturn(events){
+    events.map((e,i)=>document.getElementById(`event${i}`).innerHTML=`<a href="${e.link}">${e.link}</a>`);
+    }
+
+</script>
+  </body>
+</html>
+
+
